@@ -1,14 +1,19 @@
 #include "stream.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-  const char *device_index = "1";
-  // const char *output_path = "rtmp://localhost/live/stream";
-  // const char *output_format = "flv";
-  const char *output_path = "video.mp4";
-  const char *output_format = "mp4";
+  if (argc != 6) {
+    fprintf(stderr, "Usage: %s [device] [output_path] [output_format] [width] [height] [fps]", argv[0]);
+  }
 
-  stream_video(device_index, output_path, output_format, 1280, 720, 30);
+  const char *device = argv[1];
+  const char *output_path = argv[2];
+  const char *output_format = argv[3];
+  int width = atoi(argv[4]);
+  int height = atoi(argv[5]);
+  int fps = atoi(argv[6]);
+
+  stream_video(device, output_path, output_format, width, height, fps);
 }
 
 void stream_video(const char *device_index, const char *output_path, const char *output_format, int width, int height, int fps)
@@ -161,7 +166,7 @@ int init_device_and_input_context(stream_ctx_t *stream_ctx, const char *device_f
   stream_ctx->in_codec_ctx = avcodec_alloc_context3(stream_ctx->in_codec);
 
   AVDictionary *codec_options = NULL;
-  av_dict_set(&codec_options, "framerate", "30", 0);
+  av_dict_set(&codec_options, "framerate", fps_str, 0);
   av_dict_set(&codec_options, "preset", "superfast", 0);
 
   avcodec_parameters_to_context(stream_ctx->in_codec_ctx, stream_ctx->ifmt_ctx->streams[0]->codecpar);

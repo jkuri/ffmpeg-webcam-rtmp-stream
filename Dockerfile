@@ -12,4 +12,3 @@ RUN apt-get update && apt-get install ffmpeg -y && apt-get autoremove -y && apt-
 
 WORKDIR /app
 COPY --from=build /tmp/build/build/stream /app/stream
-
