@@ -4,6 +4,7 @@ int main(int argc, char *argv[])
 {
   if (argc != 6) {
     fprintf(stderr, "Usage: %s [device] [output_path] [output_format] [width] [height] [fps]", argv[0]);
+    return 1;
   }
 
   const char *device = argv[1];
@@ -14,6 +15,8 @@ int main(int argc, char *argv[])
   int fps = atoi(argv[6]);
 
   stream_video(device, output_path, output_format, width, height, fps);
+
+  return 0;
 }
 
 void stream_video(const char *device_index, const char *output_path, const char *output_format, int width, int height, int fps)
