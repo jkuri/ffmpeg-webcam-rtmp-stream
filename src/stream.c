@@ -2,7 +2,8 @@
 
 int main(int argc, char *argv[])
 {
-  if (argc != 7) {
+  if (argc != 7)
+  {
     fprintf(stderr, "Usage: %s [device] [output_path] [output_format] [width] [height] [fps]\n", argv[0]);
     return 1;
   }
@@ -13,6 +14,9 @@ int main(int argc, char *argv[])
   int width = atoi(argv[4]);
   int height = atoi(argv[5]);
   int fps = atoi(argv[6]);
+
+  end_stream = false;
+  signal(SIGINT, handle_signal);
 
   stream_video(device, output_path, output_format, width, height, fps);
 
@@ -84,7 +88,7 @@ void stream_video(const char *device_index, const char *output_path, const char 
 
   long pts = 0;
 
-  while (av_read_frame(stream_ctx->ifmt_ctx, pkt) >= 0)
+  while (av_read_frame(stream_ctx->ifmt_ctx, pkt) >= 0 && !end_stream)
   {
     frame = av_frame_alloc();
     if (avcodec_send_packet(stream_ctx->in_codec_ctx, pkt) != 0)
@@ -132,6 +136,8 @@ void stream_video(const char *device_index, const char *output_path, const char 
   avformat_free_context(stream_ctx->ofmt_ctx);
   avio_close(stream_ctx->ifmt_ctx->pb);
   avformat_free_context(stream_ctx->ifmt_ctx);
+
+  fprintf(stderr, "done.\n");
 }
 
 int init_device_and_input_context(stream_ctx_t *stream_ctx, const char *device_family, const char *device_index, int width, int height, int fps)
@@ -278,4 +284,10 @@ const char *get_device_family()
 #endif
 
   return device_family;
+}
+
+void handle_signal(int signal)
+{
+  fprintf(stderr, "Caught SIGINT, exiting now...\n");
+  end_stream = true;
 }
