@@ -3,7 +3,7 @@
 int main(int argc, char *argv[])
 {
   if (argc != 7) {
-    fprintf(stderr, "Usage: %s [device] [output_path] [output_format] [width] [height] [fps]", argv[0]);
+    fprintf(stderr, "Usage: %s [device] [output_path] [output_format] [width] [height] [fps]\n", argv[0]);
     return 1;
   }
 
