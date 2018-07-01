@@ -25,7 +25,9 @@ int main(int argc, char *argv[])
 
 void stream_video(const char *device_index, const char *output_path, const char *output_format, int width, int height, int fps)
 {
+#if LIBAVCODEC_VERSION_INT < AV_VERSION_INT(58, 9, 100)
   av_register_all();
+#endif
   avdevice_register_all();
   avformat_network_init();
 
