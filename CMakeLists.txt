@@ -24,7 +24,7 @@ if(APPLE)
   -framework AudioToolbox \
   -framework OpenGL")
 ELSE()
-  SET(LINK_FLAGS "-pthread -ldl -lm")
+  SET(LINK_FLAGS "-pthread -ldl -lm -static")
 ENDIF()
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/libs/build/include)

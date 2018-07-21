@@ -78,7 +78,7 @@ docker build -t ffmpeg-webcam-rtmp-stream -f Dockerfile.alpine.static .
 Then run stream from container (only works on Linux as host):
 
 ```sh
-docker run --device /dev/video0 -it ffmpeg-webcam-rtmp-stream /dev/video0 rtmp://localhost/live/stream flv 1280 720 30
+docker run --device /dev/video0 -it ffmpeg-webcam-rtmp-stream stream /dev/video0 rtmp://localhost/live/stream flv 1280 720 30
 ```
 
 ### License

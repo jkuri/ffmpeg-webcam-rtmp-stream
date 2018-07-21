@@ -11,5 +11,3 @@ FROM ubuntu:bionic AS image
 
 WORKDIR /
 COPY --from=build /tmp/build/build/stream /usr/local/bin/stream
-
-ENTRYPOINT [ "stream" ]
