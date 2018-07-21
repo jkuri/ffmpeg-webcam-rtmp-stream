@@ -1,0 +1,21 @@
+--- a/librtmp/Makefile
++++ b/librtmp/Makefile
+@@ -1,6 +1,6 @@
+ VERSION=v2.4
+
+-prefix=/usr/local
++prefix=$(PREFIX)
+
+ CC=$(CROSS_COMPILE)gcc
+ LD=$(CROSS_COMPILE)ld
+
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ VERSION=v2.4
+
+-prefix=/usr/local
++prefix=$(PREFIX)
+
+ CC=$(CROSS_COMPILE)gcc
+ LD=$(CROSS_COMPILE)ld
