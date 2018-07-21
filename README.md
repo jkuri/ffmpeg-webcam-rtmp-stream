@@ -81,6 +81,14 @@ Then run stream from container (only works on Linux as host):
 docker run --device /dev/video0 -it ffmpeg-webcam-rtmp-stream stream /dev/video0 rtmp://localhost/live/stream flv 1280 720 30
 ```
 
+### RTMP Server
+
+For testing purposes you can run RTMP server as:
+
+```sh
+docker run -it -p 1935:1935 --name rtmp-server jkuri/rtmp-server
+```
+
 ### License
 
 MIT
