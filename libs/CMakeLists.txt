@@ -47,7 +47,7 @@ elseif (UNIX AND NOT APPLE)
     openssl
     URL ${CMAKE_SOURCE_DIR}/vendor/openssl-1.0.2o.tar.gz
     PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh openssl
-    CONFIGURE_COMMAND ./Configure linux-x86_64 --prefix=${CMAKE_BINARY_DIR}
+    CONFIGURE_COMMAND ./config --prefix=${CMAKE_BINARY_DIR}
     INSTALL_COMMAND make install_sw -j12
     BUILD_IN_SOURCE 1
   )
