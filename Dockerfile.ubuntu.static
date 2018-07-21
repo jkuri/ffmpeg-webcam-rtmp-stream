@@ -1,0 +1,15 @@
+FROM ubuntu:bionic AS build
+
+RUN apt update && apt install -y build-essential automake cmake pkg-config expat nasm
+
+WORKDIR /tmp/build
+RUN ln -s /lib/x86_64-linux-gnu/libexpat.so.1 /lib/x86_64-linux-gnu/libexpat.so
+COPY . /tmp/build
+RUN make static
+
+FROM ubuntu:bionic AS image
+
+WORKDIR /
+COPY --from=build /tmp/build/build/stream /stream
+
+ENTRYPOINT [ "/stream" ]

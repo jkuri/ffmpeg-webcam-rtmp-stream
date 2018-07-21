@@ -1,0 +1,15 @@
+FROM alpine:latest AS build
+
+RUN apk --no-cache add alpine-sdk automake cmake pkgconfig expat nasm linux-headers bash coreutils
+
+WORKDIR /tmp/build
+RUN ln -s /usr/lib/libexpat.so.1 /usr/lib/libexpat.so
+COPY . /tmp/build
+RUN make static
+
+FROM alpine:latest AS image
+
+WORKDIR /
+COPY --from=build /tmp/build/build/stream /stream
+
+ENTRYPOINT [ "/stream" ]
