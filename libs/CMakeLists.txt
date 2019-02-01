@@ -105,11 +105,23 @@ EXTERNALPROJECT_ADD(
 )
 
 EXTERNALPROJECT_ADD(
+  libaom
+  DEPENDS nasm
+  URL ${CMAKE_SOURCE_DIR}/vendor/aom.tar.bz2
+  URL_HASH MD5=96dd0ebb4c38bc1e657ef8d22cf84389
+  PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh libaom
+  CONFIGURE_COMMAND mkdir -p aom_build && cd aom_build && CFLAGS=-I${CMAKE_BINARY_DIR}/include CPPFLAGS=-I${CMAKE_BINARY_DIR}/include LDFLAGS=-L${CMAKE_BINARY_DIR}/lib cmake -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR} ..
+  BUILD_COMMAND cd aom_build && make -j12
+  INSTALL_COMMAND ""
+  BUILD_IN_SOURCE 1
+)
+
+EXTERNALPROJECT_ADD(
   ffmpeg
-  DEPENDS yasm xvidcore x264 rtmpdump openssl iconv
-  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.0.2.tar.bz2
-  URL_HASH MD5=5576e8a22f80b6a336db39808f427cfb
-  CONFIGURE_COMMAND PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --enable-gpl --enable-nonfree --pkg-config-flags=--static --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-libs=-lstdc++\ -lexpat\ -pthread\ -lm\ -ldl --enable-libx264 --enable-libxvid --enable-librtmp --enable-openssl
+  DEPENDS yasm xvidcore x264 rtmpdump openssl iconv libaom
+  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.1.tar.bz2
+  URL_HASH MD5=8107e8f22a33b27a5e34b38e628eecc6
+  CONFIGURE_COMMAND PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --enable-gpl --enable-nonfree --pkg-config-flags=--static --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-libs=-lstdc++\ -lexpat\ -pthread\ -lm\ -ldl --enable-libx264 --enable-libxvid --enable-librtmp --enable-openssl --enable-libaom
   BUILD_COMMAND make -j12
   BUILD_IN_SOURCE 1
 )
