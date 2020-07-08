@@ -1,4 +1,4 @@
-FROM ubuntu:bionic AS build
+FROM ubuntu:focal AS build
 
 RUN apt update && apt install -y build-essential automake cmake pkg-config expat nasm
 
