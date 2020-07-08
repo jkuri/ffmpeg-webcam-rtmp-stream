@@ -107,8 +107,8 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   ffmpeg
   DEPENDS yasm xvidcore x264 rtmpdump openssl iconv
-  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.0.2.tar.bz2
-  URL_HASH MD5=5576e8a22f80b6a336db39808f427cfb
+  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.3.tar.bz2
+  URL_HASH MD5=ed9b3002fb491d704b548a97e1d00391
   CONFIGURE_COMMAND PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --enable-gpl --enable-nonfree --pkg-config-flags=--static --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-libs=-lstdc++\ -lexpat\ -pthread\ -lm\ -ldl --enable-libx264 --enable-libxvid --enable-librtmp --enable-openssl
   BUILD_COMMAND make -j12
   BUILD_IN_SOURCE 1

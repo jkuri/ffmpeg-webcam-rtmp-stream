@@ -14,3 +14,5 @@ clean:
 
 checkdir:
 	@mkdir -p build
+
+.PHONY: build stream static clean checkdir
