@@ -1,4 +1,4 @@
-FROM ubuntu:focal AS build
+FROM ubuntu:bionic AS build
 
 RUN apt update && apt install -y build-essential automake cmake pkg-config expat nasm
 
@@ -7,7 +7,7 @@ RUN ln -s /lib/x86_64-linux-gnu/libexpat.so.1 /lib/x86_64-linux-gnu/libexpat.so
 COPY . /tmp/build
 RUN make static
 
-FROM ubuntu:focal AS image
+FROM ubuntu:bionic AS image
 
 WORKDIR /
 COPY --from=build /tmp/build/build/stream /usr/local/bin/stream

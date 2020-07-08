@@ -1,4 +1,6 @@
-FROM ubuntu:focal AS base
+FROM ubuntu:bionic AS base
+
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install libavcodec57 libavformat57 libavutil55 libswscale4 libavresample3 libavdevice57 -y && apt-get autoclean -y
 
