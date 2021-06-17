@@ -86,12 +86,16 @@ void stream_video(const char *device_index, const char *output_path, const char 
   outframe->format = stream_ctx->out_codec_ctx->pix_fmt;
 
   struct SwsContext *swsctx = sws_getContext(stream_ctx->in_codec_ctx->width, stream_ctx->in_codec_ctx->height, stream_ctx->in_codec_ctx->pix_fmt, stream_ctx->out_codec_ctx->width, stream_ctx->out_codec_ctx->height, stream_ctx->out_codec_ctx->pix_fmt, SWS_BICUBIC, NULL, NULL, NULL);
-  av_init_packet(pkt);
+  av_new_packet(pkt, 0);
 
   long pts = 0;
 
-  while (av_read_frame(stream_ctx->ifmt_ctx, pkt) >= 0 && !end_stream)
+  while (!end_stream)
   {
+    if (av_read_frame(stream_ctx->ifmt_ctx, pkt) < 0) {
+      continue;
+    }
+
     frame = av_frame_alloc();
     if (avcodec_send_packet(stream_ctx->in_codec_ctx, pkt) != 0)
     {
@@ -106,7 +110,7 @@ void stream_video(const char *device_index, const char *output_path, const char 
     }
 
     av_packet_unref(pkt);
-    av_init_packet(pkt);
+    av_new_packet(pkt, 0);
 
     sws_scale(swsctx, (const uint8_t *const *)frame->data, frame->linesize, 0, stream_ctx->in_codec_ctx->height, outframe->data, outframe->linesize);
     av_frame_free(&frame);
@@ -129,7 +133,7 @@ void stream_video(const char *device_index, const char *output_path, const char 
 
     av_interleaved_write_frame(stream_ctx->ofmt_ctx, pkt);
     av_packet_unref(pkt);
-    av_init_packet(pkt);
+    av_new_packet(pkt, 0);
   }
 
   av_write_trailer(stream_ctx->ofmt_ctx);
