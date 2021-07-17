@@ -86,8 +86,10 @@ docker run --device /dev/video0 -it ffmpeg-webcam-rtmp-stream stream /dev/video0
 For testing purposes you can run RTMP server as:
 
 ```sh
-docker run -it -p 1935:1935 --name rtmp-server jkuri/rtmp-server
+docker run -it -p 1935:1935 -p 8080:8080 --name rtmp-server jkuri/urtmp
 ```
+
+Then open your browser at `http://localhost:8080` where you can watch your published streams.
 
 ### License
 
