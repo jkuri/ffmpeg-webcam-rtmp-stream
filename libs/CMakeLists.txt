@@ -17,7 +17,7 @@ EXTERNALPROJECT_ADD(
 
 EXTERNALPROJECT_ADD(
   nasm
-  URL ${CMAKE_SOURCE_DIR}/vendor/nasm-2.13.03.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/nasm-2.15.05.tar.bz2
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh nasm
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR}
   BUILD_COMMAND make -j12
@@ -26,7 +26,7 @@ EXTERNALPROJECT_ADD(
 
 EXTERNALPROJECT_ADD(
   zlib
-  URL ${CMAKE_SOURCE_DIR}/vendor/zlib-v1.2.11.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/zlib-v1.2.12.tar.gz
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh zlib
   BUILD_COMMAND make -j12
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --static
@@ -56,7 +56,7 @@ endif()
 EXTERNALPROJECT_ADD(
   xvidcore
   DEPENDS yasm
-  URL ${CMAKE_SOURCE_DIR}/vendor/xvidcore-1.3.5.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/xvidcore-1.3.7.tar.gz
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh xvidcore
   CONFIGURE_COMMAND cd build/generic && ./configure --prefix=${CMAKE_BINARY_DIR}
   BUILD_COMMAND cd build/generic && make -j12
@@ -67,7 +67,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   x264
   DEPENDS nasm
-  URL ${CMAKE_SOURCE_DIR}/vendor/x264-snapshot-20180720-2245-stable.tar.bz2
+  URL ${CMAKE_SOURCE_DIR}/vendor/x264-master.tar.bz2
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh x264
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_BINARY_DIR} --enable-static --enable-pic --enable-lto --disable-lavf
   BUILD_COMMAND make -j12
@@ -87,7 +87,7 @@ EXTERNALPROJECT_ADD(
 
 EXTERNALPROJECT_ADD(
   iconv
-  URL ${CMAKE_SOURCE_DIR}/vendor/libiconv-1.15.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/libiconv-1.17.tar.gz
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh iconv
   CONFIGURE_COMMAND PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-static
   BUILD_COMMAND make -j12
@@ -97,7 +97,7 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   libpng
   DEPENDS zlib
-  URL ${CMAKE_SOURCE_DIR}/vendor/libpng-1.6.34.tar.gz
+  URL ${CMAKE_SOURCE_DIR}/vendor/libpng-1.6.37.tar.gz
   PATCH_COMMAND ${CMAKE_SOURCE_DIR}/patches/patch-manager.sh libpng
   CONFIGURE_COMMAND CFLAGS=-I${CMAKE_BINARY_DIR}/include CPPFLAGS=-I${CMAKE_BINARY_DIR}/include LDFLAGS=-L${CMAKE_BINARY_DIR}/lib ./configure --prefix=${CMAKE_BINARY_DIR} --disable-shared --enable-static
   BUILD_COMMAND make -j12
@@ -107,8 +107,8 @@ EXTERNALPROJECT_ADD(
 EXTERNALPROJECT_ADD(
   ffmpeg
   DEPENDS yasm xvidcore x264 rtmpdump openssl iconv
-  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-4.3.tar.bz2
-  URL_HASH MD5=ed9b3002fb491d704b548a97e1d00391
+  URL ${CMAKE_SOURCE_DIR}/vendor/ffmpeg-5.1.tar.bz2
+  URL_HASH MD5=0e5091837a9b950c81e1d5aaba281e51
   CONFIGURE_COMMAND PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH} ./configure --prefix=${CMAKE_BINARY_DIR} --datadir=${CMAKE_BINARY_DIR}/etc --disable-shared --enable-static --enable-pic --enable-gpl --enable-nonfree --pkg-config-flags=--static --disable-doc --disable-debug --disable-ffplay --disable-outdevs --enable-runtime-cpudetect --extra-cflags=-I${CMAKE_BINARY_DIR}/include\ -static --extra-ldflags=-L${CMAKE_BINARY_DIR}/lib --extra-libs=-lstdc++\ -lexpat\ -pthread\ -lm\ -ldl --enable-libx264 --enable-libxvid --enable-librtmp --enable-openssl
   BUILD_COMMAND make -j12
   BUILD_IN_SOURCE 1
