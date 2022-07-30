@@ -1,4 +1,4 @@
-FROM ubuntu:bionic AS base
+FROM ubuntu:jammy AS base
 
 ENV DEBIAN_FRONTEND noninteractive
 
