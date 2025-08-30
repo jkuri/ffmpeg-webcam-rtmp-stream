@@ -1,8 +1,8 @@
-FROM ubuntu:jammy AS base
+FROM ubuntu:plucky AS base
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install libavcodec58 libavformat58 libavutil56 libswscale5 libavdevice58 -y && apt-get autoclean -y
+RUN apt-get update && apt-get install libavcodec61 libavformat61 libavutil59 libswscale8 libavdevice61 -y && apt-get autoclean -y
 
 FROM base AS build
 
