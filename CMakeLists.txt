@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 PROJECT(ffmpeg-webcam-stream VERSION 0.1.0 LANGUAGES CXX C)
 
@@ -22,7 +22,8 @@ if(APPLE)
   -framework CoreAudio \
   -framework VideoToolbox \
   -framework AudioToolbox \
-  -framework OpenGL")
+  -framework OpenGL\
+  -framework Metal")
 ELSE()
   SET(LINK_FLAGS "-pthread -ldl -lm -static")
 ENDIF()
@@ -30,4 +31,3 @@ ENDIF()
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/libs/build/include)
 ADD_EXECUTABLE(stream src/stream.c)
 TARGET_LINK_LIBRARIES(stream ${ARCHIVE_LIBS} ${LINK_FLAGS})
-
